@@ -58,9 +58,22 @@ function Dashboard() {
         minEngagement: filters.minEngagement.toString(),
         ...(filters.hasContact !== null && { hasContact: filters.hasContact.toString() }),
       });
-      const response = await fetch(`/api/companies?${params}`);
-      if (!response.ok) throw new Error('Failed to fetch companies');
-      return response.json();
+      
+      const url = `/api/companies?${params}`;
+      console.log('📤 Fetching companies from:', url);
+      
+      const response = await fetch(url);
+      console.log('📥 Response status:', response.status);
+      
+      if (!response.ok) {
+        const errorText = await response.text();
+        console.error('❌ API Error:', errorText);
+        throw new Error(`Failed to fetch companies (${response.status}): ${errorText}`);
+      }
+      
+      const data = await response.json();
+      console.log('✅ Fetched companies:', data);
+      return data;
     },
   });
 
@@ -117,11 +130,23 @@ function Dashboard() {
           {/* Error State */}
           {error && (
             <div className="bg-red-50 border-l-4 border-red-500 rounded-lg p-6">
-              <div className="flex items-center gap-3">
-                <div className="text-red-500 text-2xl">⚠️</div>
-                <div>
+              <div className="flex items-start gap-3">
+                <div className="text-red-500 text-2xl flex-shrink-0">⚠️</div>
+                <div className="flex-1">
                   <p className="text-red-800 font-semibold">Error loading companies</p>
-                  <p className="text-red-700 text-sm mt-1">Please try again or refresh the page</p>
+                  <p className="text-red-700 text-sm mt-1">{error instanceof Error ? error.message : 'Unknown error'}</p>
+                  <details className="mt-3 text-xs text-red-600">
+                    <summary className="cursor-pointer font-medium">Debug Info</summary>
+                    <pre className="mt-2 bg-red-100 p-2 rounded overflow-auto max-h-40">
+                      {error instanceof Error ? error.stack : JSON.stringify(error, null, 2)}
+                    </pre>
+                  </details>
+                  <button
+                    onClick={() => refetch()}
+                    className="mt-3 px-3 py-1 bg-red-600 text-white rounded text-sm hover:bg-red-700 transition-colors"
+                  >
+                    Retry
+                  </button>
                 </div>
               </div>
             </div>

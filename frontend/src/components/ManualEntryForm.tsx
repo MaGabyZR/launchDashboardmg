@@ -35,22 +35,38 @@ function ManualEntryForm({ onSuccess }: ManualEntryFormProps) {
         manualMetrics.push({ platform: 'linkedin', likes: data.linkedinLikes });
       }
 
+      const payload = {
+        urls,
+        companyName: data.companyName,
+        manualMetrics: manualMetrics.length > 0 ? manualMetrics : undefined,
+      };
+
+      console.log('📤 Sending request to /api/launch-posts:', payload);
+
       const response = await fetch('/api/launch-posts', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          urls,
-          companyName: data.companyName,
-          manualMetrics: manualMetrics.length > 0 ? manualMetrics : undefined,
-        }),
+        body: JSON.stringify(payload),
       });
 
-      if (!response.ok) throw new Error('Failed to submit URLs');
-      return response.json();
+      console.log('📥 Response status:', response.status);
+      console.log('📥 Response headers:', response.headers);
+
+      if (!response.ok) {
+        const errorText = await response.text();
+        console.error('❌ API Error:', errorText);
+        throw new Error(`API Error (${response.status}): ${errorText}`);
+      }
+
+      const responseData = await response.json();
+      console.log('✅ Response data:', responseData);
+      return responseData;
     },
     onSuccess: (data) => {
-      const failedCount = data.results.filter((r: any) => r.status === 'failed').length;
-      const successCount = data.results.filter((r: any) => r.status === 'success').length;
+      const failedCount = data.results?.filter((r: any) => r.status === 'failed').length || 0;
+      const successCount = data.results?.filter((r: any) => r.status === 'success').length || 0;
+
+      console.log(`📊 Results: ${successCount} success, ${failedCount} failed`);
 
       if (failedCount > 0) {
         const errors = data.results
@@ -65,6 +81,10 @@ function ManualEntryForm({ onSuccess }: ManualEntryFormProps) {
         reset();
         onSuccess();
       }
+    },
+    onError: (error: Error) => {
+      console.error('🔴 Mutation error:', error.message);
+      setValidationErrors([`Error: ${error.message}`]);
     },
   });
 
