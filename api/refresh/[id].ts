@@ -1,7 +1,7 @@
 import type { Request, Response } from 'express';
-import { prisma } from '../../src/lib/db.js';
-import { scrapeXPost, scrapeLinkedInPost } from '../../src/services/scraper.js';
-import type { RefreshResponse } from '../../src/types/index.js';
+import { prisma } from '../src/lib/db.js';
+import { scrapeXPost, scrapeLinkedInPost } from '../src/services/scraper.js';
+import type { RefreshResponse } from '../src/types/index.js';
 
 /**
  * POST /api/refresh/:id

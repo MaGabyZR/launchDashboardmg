@@ -1,7 +1,7 @@
 import type { Request, Response } from 'express';
-import { prisma } from '../../src/lib/db.js';
-import { classifyEngagement, generateDM } from '../../src/services/dmGenerator.js';
-import type { Platform } from '../../src/types/index.js';
+import { prisma } from '../src/lib/db.js';
+import { classifyEngagement, generateDM } from '../src/services/dmGenerator.js';
+import type { Platform } from '../src/types/index.js';
 
 /**
  * GET /api/export

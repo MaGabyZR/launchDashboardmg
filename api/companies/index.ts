@@ -1,6 +1,6 @@
 import type { Request, Response } from 'express';
-import { prisma } from '../../src/lib/db.js';
-import { classifyEngagement, generateDM } from '../../src/services/dmGenerator.js';
+import { prisma } from '../src/lib/db.js';
+import { classifyEngagement, generateDM } from '../src/services/dmGenerator.js';
 
 /**
  * GET /api/companies

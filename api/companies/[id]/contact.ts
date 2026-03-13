@@ -1,6 +1,6 @@
 import type { Request, Response } from 'express';
-import { prisma } from '../../../src/lib/db.js';
-import type { ContactInfoRequest, ContactInfoResponse } from '../../../src/types/index.js';
+import { prisma } from '../../src/lib/db.js';
+import type { ContactInfoRequest, ContactInfoResponse } from '../../src/types/index.js';
 
 /**
  * Validate email format
