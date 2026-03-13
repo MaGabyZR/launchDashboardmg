@@ -1,0 +1,89 @@
+// schema.prisma
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+model Company {
+  id            String         @id @default(cuid())
+  name          String
+  ycBatch       String?
+  createdAt     DateTime       @default(now())
+  updatedAt     DateTime       @updatedAt
+  
+  fundraise     Fundraise?
+  launchPosts   LaunchPost[]
+  contactInfo   ContactInfo?
+  
+  @@index([name])
+  @@index([ycBatch])
+}
+
+model Fundraise {
+  id              String   @id @default(cuid())
+  companyId       String   @unique
+  company         Company  @relation(fields: [companyId], references: [id], onDelete: Cascade)
+  
+  amount          Float
+  announcementDate DateTime
+  source          DataSource
+  
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
+  
+  @@index([companyId])
+}
+
+model LaunchPost {
+  id          String     @id @default(cuid())
+  companyId   String
+  company     Company    @relation(fields: [companyId], references: [id], onDelete: Cascade)
+  
+  platform    Platform
+  url         String     @unique
+  postId      String
+  likes       Int        @default(0)
+  dataSource  DataSource
+  
+  lastScraped DateTime?
+  scrapeFailed Boolean   @default(false)
+  scrapeError String?
+  
+  createdAt   DateTime   @default(now())
+  updatedAt   DateTime   @updatedAt
+  
+  @@index([companyId])
+  @@index([platform])
+  @@index([dataSource])
+}
+
+model ContactInfo {
+  id          String   @id @default(cuid())
+  companyId   String   @unique
+  company     Company  @relation(fields: [companyId], references: [id], onDelete: Cascade)
+  
+  email       String?
+  phone       String?
+  linkedinUrl String?
+  xHandle     String?
+  
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+  
+  @@index([companyId])
+}
+
+enum Platform {
+  X
+  LINKEDIN
+}
+
+enum DataSource {
+  MANUAL
+  SCRAPED
+  YC_API
+}
