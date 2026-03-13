@@ -4,9 +4,15 @@ interface DataSourceBadgeProps {
 
 function DataSourceBadge({ source }: DataSourceBadgeProps) {
   const styles = {
-    scraped: 'bg-blue-100 text-blue-800',
-    manual: 'bg-purple-100 text-purple-800',
-    yc_api: 'bg-green-100 text-green-800',
+    scraped: 'bg-gradient-to-r from-blue-500 to-blue-600 text-white shadow-lg',
+    manual: 'bg-gradient-to-r from-purple-500 to-purple-600 text-white shadow-lg',
+    yc_api: 'bg-gradient-to-r from-green-500 to-emerald-600 text-white shadow-lg',
+  };
+
+  const icons = {
+    scraped: '🌐',
+    manual: '✍️',
+    yc_api: '🚀',
   };
 
   const labels = {
@@ -16,7 +22,8 @@ function DataSourceBadge({ source }: DataSourceBadgeProps) {
   };
 
   return (
-    <span className={`text-xs px-2 py-1 rounded-full font-medium ${styles[source]}`}>
+    <span className={`text-xs px-3 py-1.5 rounded-full font-semibold ${styles[source]} flex items-center gap-1 w-fit`}>
+      <span>{icons[source]}</span>
       {labels[source]}
     </span>
   );

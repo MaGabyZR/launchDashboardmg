@@ -40,23 +40,26 @@ function ExportButton({ companyIds }: ExportButtonProps) {
       <button
         onClick={() => setShowMenu(!showMenu)}
         disabled={mutation.isPending}
-        className="px-4 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700 transition-colors disabled:opacity-50 font-medium"
+        className="px-4 py-2 bg-gradient-to-r from-emerald-500 to-teal-600 text-white rounded-lg hover:from-emerald-600 hover:to-teal-700 transition-all shadow-lg hover:shadow-xl disabled:opacity-50 font-semibold flex items-center gap-2"
       >
+        <span>📥</span>
         {mutation.isPending ? 'Exporting...' : 'Export'}
       </button>
 
       {showMenu && (
-        <div className="absolute right-0 mt-2 w-32 bg-white rounded-lg shadow-lg border border-gray-200 z-10">
+        <div className="absolute right-0 mt-2 w-40 bg-gradient-to-b from-slate-700 to-slate-800 rounded-lg shadow-2xl border border-slate-600 z-10 overflow-hidden">
           <button
             onClick={() => handleExport('csv')}
-            className="w-full text-left px-4 py-2 hover:bg-gray-50 text-sm text-gray-700 border-b"
+            className="w-full text-left px-4 py-3 hover:bg-slate-600 text-sm text-white border-b border-slate-600 transition-colors font-medium flex items-center gap-2"
           >
+            <span>📊</span>
             Export as CSV
           </button>
           <button
             onClick={() => handleExport('json')}
-            className="w-full text-left px-4 py-2 hover:bg-gray-50 text-sm text-gray-700"
+            className="w-full text-left px-4 py-3 hover:bg-slate-600 text-sm text-white transition-colors font-medium flex items-center gap-2"
           >
+            <span>📋</span>
             Export as JSON
           </button>
         </div>

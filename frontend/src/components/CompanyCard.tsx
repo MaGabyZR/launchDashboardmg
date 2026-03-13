@@ -60,148 +60,166 @@ function CompanyCard({ company, onRefresh }: CompanyCardProps) {
   const linkedinPost = company.launchPosts.find(p => p.platform === 'linkedin');
 
   return (
-    <div className="bg-white rounded-lg shadow-md p-6 hover:shadow-lg transition-shadow">
-      {/* Header */}
-      <div className="flex justify-between items-start mb-4">
-        <div>
-          <h3 className="text-lg font-semibold text-gray-900">{company.name}</h3>
-          {company.ycBatch && (
-            <p className="text-sm text-gray-600">YC {company.ycBatch}</p>
-          )}
+    <div className="bg-white rounded-xl shadow-md hover:shadow-xl transition-all duration-300 overflow-hidden border border-gray-100">
+      {/* Header with gradient background */}
+      <div className="bg-gradient-to-r from-blue-50 to-indigo-50 p-6 border-b border-gray-100">
+        <div className="flex justify-between items-start gap-4">
+          <div className="flex-1">
+            <h3 className="text-xl font-bold text-gray-900">{company.name}</h3>
+            {company.ycBatch && (
+              <div className="flex items-center gap-2 mt-2">
+                <span className="inline-block px-3 py-1 bg-green-100 text-green-800 text-xs font-semibold rounded-full">
+                  YC {company.ycBatch}
+                </span>
+              </div>
+            )}
+          </div>
+          <button
+            onClick={() => refreshMutation.mutate()}
+            disabled={refreshMutation.isPending}
+            className="px-3 py-2 text-sm bg-white border border-gray-300 hover:bg-gray-50 rounded-lg transition-all duration-200 disabled:opacity-50 font-medium"
+            title="Refresh engagement metrics"
+          >
+            {refreshMutation.isPending ? '⟳ Refreshing' : '⟳ Refresh'}
+          </button>
         </div>
-        <button
-          onClick={() => refreshMutation.mutate()}
-          disabled={refreshMutation.isPending}
-          className="px-3 py-1 text-sm bg-gray-100 hover:bg-gray-200 rounded transition-colors disabled:opacity-50"
-        >
-          {refreshMutation.isPending ? 'Refreshing...' : 'Refresh'}
-        </button>
       </div>
 
-      {/* Fundraise */}
-      {company.fundraise ? (
-        <div className="mb-4 pb-4 border-b">
-          <div className="flex items-center justify-between">
-            <span className="text-sm text-gray-600">Fundraise:</span>
-            <div className="flex items-center gap-2">
-              <span className="font-semibold text-gray-900">
+      <div className="p-6 space-y-5">
+        {/* Fundraise Section */}
+        {company.fundraise ? (
+          <div className="bg-gradient-to-r from-green-50 to-emerald-50 p-4 rounded-lg border border-green-100">
+            <p className="text-xs font-semibold text-gray-600 uppercase tracking-wide mb-2">Fundraise Amount</p>
+            <div className="flex items-center justify-between">
+              <span className="text-2xl font-bold text-green-700">
                 ${(company.fundraise.amount / 1000000).toFixed(1)}M
               </span>
               <DataSourceBadge source={company.fundraise.source} />
             </div>
           </div>
-        </div>
-      ) : (
-        <div className="mb-4 pb-4 border-b text-sm text-gray-500">
-          No fundraise data
-        </div>
-      )}
-
-      {/* Engagement Metrics */}
-      <div className="space-y-3 mb-4 pb-4 border-b">
-        {xPost ? (
-          <div className="flex items-center justify-between">
-            <span className="text-sm text-gray-600">X Likes:</span>
-            <div className="flex items-center gap-2">
-              <span className="font-semibold text-gray-900">{xPost.likes}</span>
-              <DataSourceBadge source={xPost.dataSource} />
-            </div>
-          </div>
         ) : (
-          <div className="text-sm text-gray-500">No X post data</div>
+          <div className="bg-gray-50 p-4 rounded-lg border border-gray-200 text-center">
+            <p className="text-sm text-gray-500">No fundraise data</p>
+          </div>
         )}
 
-        {linkedinPost ? (
-          <div className="flex items-center justify-between">
-            <span className="text-sm text-gray-600">LinkedIn Likes:</span>
-            <div className="flex items-center gap-2">
-              <span className="font-semibold text-gray-900">{linkedinPost.likes}</span>
-              <DataSourceBadge source={linkedinPost.dataSource} />
+        {/* Engagement Metrics */}
+        <div className="space-y-3">
+          <p className="text-xs font-semibold text-gray-600 uppercase tracking-wide">Engagement Metrics</p>
+          <div className="grid grid-cols-2 gap-3">
+            {xPost ? (
+              <div className="bg-blue-50 p-3 rounded-lg border border-blue-100">
+                <p className="text-xs text-gray-600 mb-1">X Likes</p>
+                <div className="flex items-center justify-between">
+                  <span className="text-lg font-bold text-blue-700">{xPost.likes}</span>
+                  <DataSourceBadge source={xPost.dataSource} />
+                </div>
+              </div>
+            ) : (
+              <div className="bg-gray-50 p-3 rounded-lg border border-gray-200 text-center">
+                <p className="text-xs text-gray-500">No X data</p>
+              </div>
+            )}
+
+            {linkedinPost ? (
+              <div className="bg-indigo-50 p-3 rounded-lg border border-indigo-100">
+                <p className="text-xs text-gray-600 mb-1">LinkedIn Likes</p>
+                <div className="flex items-center justify-between">
+                  <span className="text-lg font-bold text-indigo-700">{linkedinPost.likes}</span>
+                  <DataSourceBadge source={linkedinPost.dataSource} />
+                </div>
+              </div>
+            ) : (
+              <div className="bg-gray-50 p-3 rounded-lg border border-gray-200 text-center">
+                <p className="text-xs text-gray-500">No LinkedIn data</p>
+              </div>
+            )}
+          </div>
+        </div>
+
+        {/* Contact Info */}
+        {company.contactInfo && (
+          <div className="bg-purple-50 p-4 rounded-lg border border-purple-100">
+            <p className="text-xs font-semibold text-gray-600 uppercase tracking-wide mb-3">Contact Information</p>
+            <div className="space-y-2 text-sm">
+              {company.contactInfo.email && (
+                <p className="text-gray-700"><span className="font-semibold">📧</span> {company.contactInfo.email}</p>
+              )}
+              {company.contactInfo.phone && (
+                <p className="text-gray-700"><span className="font-semibold">📱</span> {company.contactInfo.phone}</p>
+              )}
+              {company.contactInfo.linkedinUrl && (
+                <p className="text-gray-700">
+                  <span className="font-semibold">💼</span>{' '}
+                  <a
+                    href={company.contactInfo.linkedinUrl}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="text-blue-600 hover:underline"
+                  >
+                    LinkedIn Profile
+                  </a>
+                </p>
+              )}
+              {company.contactInfo.xHandle && (
+                <p className="text-gray-700">
+                  <span className="font-semibold">𝕏</span>{' '}
+                  <a
+                    href={`https://x.com/${company.contactInfo.xHandle}`}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="text-blue-600 hover:underline"
+                  >
+                    @{company.contactInfo.xHandle}
+                  </a>
+                </p>
+              )}
+            </div>
+            <div className="mt-3">
+              <ContactInfoForm
+                companyId={company.id}
+                existingData={company.contactInfo}
+                onSave={onRefresh}
+              />
             </div>
           </div>
-        ) : (
-          <div className="text-sm text-gray-500">No LinkedIn post data</div>
         )}
-      </div>
 
-      {/* Contact Info */}
-      {company.contactInfo && (
-        <div className="mb-4 pb-4 border-b">
-          <p className="text-sm font-semibold text-gray-700 mb-2">Contact:</p>
-          <div className="space-y-1 text-sm text-gray-600">
-            {company.contactInfo.email && (
-              <p>Email: {company.contactInfo.email}</p>
-            )}
-            {company.contactInfo.phone && (
-              <p>Phone: {company.contactInfo.phone}</p>
-            )}
-            {company.contactInfo.linkedinUrl && (
-              <p>
-                LinkedIn:{' '}
-                <a
-                  href={company.contactInfo.linkedinUrl}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="text-blue-600 hover:underline"
-                >
-                  Profile
-                </a>
-              </p>
-            )}
-            {company.contactInfo.xHandle && (
-              <p>
-                X:{' '}
-                <a
-                  href={`https://x.com/${company.contactInfo.xHandle}`}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="text-blue-600 hover:underline"
-                >
-                  @{company.contactInfo.xHandle}
-                </a>
-              </p>
-            )}
-          </div>
-          <div className="mt-2">
+        {!company.contactInfo && (
+          <div className="bg-gray-50 p-4 rounded-lg border border-dashed border-gray-300 text-center">
+            <p className="text-sm text-gray-600 mb-3">No contact information yet</p>
             <ContactInfoForm
               companyId={company.id}
-              existingData={company.contactInfo}
+              existingData={undefined}
               onSave={onRefresh}
             />
           </div>
-        </div>
-      )}
+        )}
 
-      {!company.contactInfo && (
-        <div className="mb-4 pb-4 border-b">
-          <ContactInfoForm
-            companyId={company.id}
-            existingData={undefined}
-            onSave={onRefresh}
-          />
-        </div>
-      )}
+        {/* DM Draft */}
+        {company.isLowEngagement && company.dmDraft && (
+          <div className="bg-gradient-to-r from-amber-50 to-orange-50 p-4 rounded-lg border-2 border-amber-200">
+            <div className="flex items-center gap-2 mb-3">
+              <span className="text-lg">💡</span>
+              <p className="text-sm font-bold text-amber-900">Outreach Opportunity</p>
+            </div>
+            <p className="text-sm text-amber-900 mb-3 leading-relaxed">{company.dmDraft}</p>
+            <button
+              onClick={handleCopyDM}
+              className="w-full px-3 py-2 bg-amber-200 hover:bg-amber-300 text-amber-900 rounded-lg transition-colors font-semibold text-sm"
+            >
+              {copied ? '✓ Copied to Clipboard' : '📋 Copy to Clipboard'}
+            </button>
+          </div>
+        )}
 
-      {/* DM Draft */}
-      {company.isLowEngagement && company.dmDraft && (
-        <div className="mb-4 pb-4 border-b bg-yellow-50 p-3 rounded">
-          <p className="text-sm font-semibold text-gray-700 mb-2">Outreach Draft:</p>
-          <p className="text-sm text-gray-700 mb-2">{company.dmDraft}</p>
-          <button
-            onClick={handleCopyDM}
-            className="text-sm px-3 py-1 bg-yellow-200 hover:bg-yellow-300 rounded transition-colors"
-          >
-            {copied ? 'Copied!' : 'Copy to Clipboard'}
-          </button>
-        </div>
-      )}
-
-      {/* Last Updated */}
-      {(xPost || linkedinPost) && (
-        <p className="text-xs text-gray-500">
-          Last updated: {new Date(xPost?.lastUpdated || linkedinPost?.lastUpdated || '').toLocaleDateString()}
-        </p>
-      )}
+        {/* Last Updated */}
+        {(xPost || linkedinPost) && (
+          <p className="text-xs text-gray-500 text-center pt-2 border-t border-gray-100">
+            Last updated: {new Date(xPost?.lastUpdated || linkedinPost?.lastUpdated || '').toLocaleDateString()}
+          </p>
+        )}
+      </div>
     </div>
   );
 }
