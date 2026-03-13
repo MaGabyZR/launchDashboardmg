@@ -1,7 +1,6 @@
 import type { Request, Response } from 'express';
 import { prisma } from '../../src/lib/db.js';
 import { classifyEngagement, generateDM } from '../../src/services/dmGenerator.js';
-import type { Platform } from '../../src/types/index.js';
 
 /**
  * GET /api/companies
@@ -65,7 +64,8 @@ export default async function handler(req: Request, res: Response) {
         // Convert Prisma Platform enum to lowercase for dmGenerator
         const launchPostsForDM = company.launchPosts.map((post) => ({
           ...post,
-          platform: post.platform.toLowerCase() as Platform,
+          platform: (post.platform.toLowerCase() as 'x' | 'linkedin'),
+          dataSource: (post.dataSource.toLowerCase() as 'manual' | 'scraped' | 'yc_api'),
         }));
 
         // Calculate total engagement

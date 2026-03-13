@@ -3,7 +3,7 @@ import { prisma } from '../../src/lib/db.js';
 import { parseURL } from '../../src/services/urlParser.js';
 import { scrapeXPost, scrapeLinkedInPost } from '../../src/services/scraper.js';
 import { searchYCCompany } from '../../src/services/ycClient.js';
-import type { Platform, DataSource } from '../../src/types/index.js';
+import type { DataSource } from '../../src/types/index.js';
 
 /**
  * POST /api/launch-posts

@@ -356,7 +356,6 @@ describe('DM Generator Service', () => {
       );
     });
   });
-});
 
   describe('generateDM - Unit Tests', () => {
     it('should return null for companies without low engagement', () => {

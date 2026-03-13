@@ -7,7 +7,7 @@
  * Validates: Requirements 6.1, 6.2, 6.3
  */
 
-import { LaunchPost, Platform, DMDraft } from '../types/index.js';
+import { LaunchPost, DMDraft } from '../types/index.js';
 
 /**
  * Engagement thresholds by platform

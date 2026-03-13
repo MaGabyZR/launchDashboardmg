@@ -15,15 +15,15 @@ const sampleCompanies = [
     fundraise: {
       amount: 20000000,
       announcementDate: new Date('2011-09-01'),
-      source: 'YC_API',
+      source: 'YC_API' as const,
     },
     launchPosts: [
       {
-        platform: 'X',
+        platform: 'X' as const,
         url: 'https://twitter.com/stripe/status/1234567890',
         postId: '1234567890',
         likes: 5420,
-        dataSource: 'MANUAL',
+        dataSource: 'MANUAL' as const,
       },
     ],
     contactInfo: {
@@ -38,22 +38,22 @@ const sampleCompanies = [
     fundraise: {
       amount: 25000000,
       announcementDate: new Date('2010-07-01'),
-      source: 'YC_API',
+      source: 'YC_API' as const,
     },
     launchPosts: [
       {
-        platform: 'X',
+        platform: 'X' as const,
         url: 'https://twitter.com/airbnb/status/9876543210',
         postId: '9876543210',
         likes: 8932,
-        dataSource: 'MANUAL',
+        dataSource: 'MANUAL' as const,
       },
       {
-        platform: 'LINKEDIN',
+        platform: 'LINKEDIN' as const,
         url: 'https://linkedin.com/feed/update/urn:li:activity:1234567890',
         postId: 'urn:li:activity:1234567890',
         likes: 3421,
-        dataSource: 'MANUAL',
+        dataSource: 'MANUAL' as const,
       },
     ],
     contactInfo: {
@@ -68,15 +68,15 @@ const sampleCompanies = [
     fundraise: {
       amount: 15000000,
       announcementDate: new Date('2008-03-01'),
-      source: 'YC_API',
+      source: 'YC_API' as const,
     },
     launchPosts: [
       {
-        platform: 'X',
+        platform: 'X' as const,
         url: 'https://twitter.com/dropbox/status/5555555555',
         postId: '5555555555',
         likes: 4123,
-        dataSource: 'MANUAL',
+        dataSource: 'MANUAL' as const,
       },
     ],
     contactInfo: {
@@ -91,22 +91,22 @@ const sampleCompanies = [
     fundraise: {
       amount: 20000000,
       announcementDate: new Date('2011-08-01'),
-      source: 'YC_API',
+      source: 'YC_API' as const,
     },
     launchPosts: [
       {
-        platform: 'X',
+        platform: 'X' as const,
         url: 'https://twitter.com/twitch/status/3333333333',
         postId: '3333333333',
         likes: 6789,
-        dataSource: 'MANUAL',
+        dataSource: 'MANUAL' as const,
       },
       {
-        platform: 'LINKEDIN',
+        platform: 'LINKEDIN' as const,
         url: 'https://linkedin.com/feed/update/urn:li:activity:9999999999',
         postId: 'urn:li:activity:9999999999',
         likes: 2456,
-        dataSource: 'MANUAL',
+        dataSource: 'MANUAL' as const,
       },
     ],
     contactInfo: {
@@ -121,15 +121,15 @@ const sampleCompanies = [
     fundraise: {
       amount: 14000000,
       announcementDate: new Date('2012-06-01'),
-      source: 'YC_API',
+      source: 'YC_API' as const,
     },
     launchPosts: [
       {
-        platform: 'X',
+        platform: 'X' as const,
         url: 'https://twitter.com/figmadesign/status/7777777777',
         postId: '7777777777',
         likes: 5234,
-        dataSource: 'MANUAL',
+        dataSource: 'MANUAL' as const,
       },
     ],
     contactInfo: {
@@ -144,22 +144,22 @@ const sampleCompanies = [
     fundraise: {
       amount: 10000000,
       announcementDate: new Date('2016-04-01'),
-      source: 'YC_API',
+      source: 'YC_API' as const,
     },
     launchPosts: [
       {
-        platform: 'X',
+        platform: 'X' as const,
         url: 'https://twitter.com/NotionHQ/status/2222222222',
         postId: '2222222222',
         likes: 7654,
-        dataSource: 'MANUAL',
+        dataSource: 'MANUAL' as const,
       },
       {
-        platform: 'LINKEDIN',
+        platform: 'LINKEDIN' as const,
         url: 'https://linkedin.com/feed/update/urn:li:activity:4444444444',
         postId: 'urn:li:activity:4444444444',
         likes: 3890,
-        dataSource: 'MANUAL',
+        dataSource: 'MANUAL' as const,
       },
     ],
     contactInfo: {
