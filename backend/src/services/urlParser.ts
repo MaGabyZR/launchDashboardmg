@@ -17,14 +17,15 @@ const URL_PATTERNS = {
   // Format: https://twitter.com/username/status/1234567890
   // Format: https://x.com/username/status/1234567890
   // Format: https://mobile.twitter.com/username/status/1234567890
-  x: /^https?:\/\/(?:www\.|mobile\.)?(?:twitter\.com|x\.com)\/[^\/]+\/status\/(\d+)/i,
+  // Also supports URLs with query parameters: https://x.com/username/status/1234567890?s=20
+  x: /(?:twitter\.com|x\.com)\/[^\/]+\/status\/(\d+)/i,
   
   // LinkedIn patterns - supports posts and feed updates
   // Format: https://www.linkedin.com/posts/username_activity-1234567890-abcd
   // Format: https://linkedin.com/feed/update/urn:li:activity:1234567890
   linkedin: [
-    /^https?:\/\/(?:www\.)?linkedin\.com\/posts\/[^\/]+_activity-(\d+)-[a-zA-Z0-9]+/i,
-    /^https?:\/\/(?:www\.)?linkedin\.com\/feed\/update\/urn:li:activity:(\d+)/i
+    /linkedin\.com\/posts\/[^\/]+_activity-(\d+)-[a-zA-Z0-9]+/i,
+    /linkedin\.com\/feed\/update\/urn:li:activity:(\d+)/i
   ]
 };
 
