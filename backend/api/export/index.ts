@@ -128,7 +128,7 @@ export default async function handler(req: Request, res: Response) {
 /**
  * Generate CSV content from enriched company data
  */
-function generateCSV(companies: any[]): string {
+function generateCSV(companies: Array<Record<string, unknown>>): string {
   // Define CSV headers
   const headers = [
     'Company Name',
@@ -151,7 +151,7 @@ function generateCSV(companies: any[]): string {
   ];
 
   // Escape CSV values
-  const escapeCSV = (value: any): string => {
+  const escapeCSV = (value: unknown): string => {
     if (value === null || value === undefined) {
       return '';
     }
@@ -164,7 +164,7 @@ function generateCSV(companies: any[]): string {
   };
 
   // Build CSV rows
-  const rows = companies.map((company: any) => [
+  const rows = companies.map((company: Record<string, unknown>) => [
     escapeCSV(company.name),
     escapeCSV(company.ycBatch),
     escapeCSV(company.fundraiseAmount),
