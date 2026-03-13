@@ -13,15 +13,11 @@
   "routes": [
     {
       "src": "/api/(.*)",
-      "dest": "/backend/api/$1"
+      "dest": "/backend/api/$1.ts"
     },
     {
       "src": "/(.*)",
       "dest": "/frontend/dist/$1"
     }
-  ],
-  "env": {
-    "DATABASE_URL": "@database-url",
-    "NODE_ENV": "production"
-  }
+  ]
 }
