@@ -40,25 +40,74 @@ VITE_API_BASE_URL = https://your-project.vercel.app
 3. Wait for build to complete (2-3 minutes)
 4. Click the deployment URL when ready
 
-## Step 5: Run Migrations
+## Step 5: Populate Database with Seed Data
 
-After deployment completes:
+After deployment completes, you need to run migrations and seed the database:
+
+### 5.1 Install Vercel CLI (if not already installed)
 
 ```bash
-# Install Vercel CLI
 npm install -g vercel
+```
 
-# Link your project
+### 5.2 Link Your Project
+
+```bash
 vercel link
+```
 
-# Pull environment variables
+When prompted:
+- Select your Vercel account
+- Select your project
+- Answer "N" to "Link to existing project?" (unless you want to link to a different project)
+
+### 5.3 Pull Environment Variables
+
+```bash
 vercel env pull
+```
 
-# Run migrations
+This creates a `.env.local` file with your production database connection string.
+
+### 5.4 Generate Prisma Client
+
+```bash
 cd backend
 npm run prisma:generate
+```
+
+### 5.5 Run Database Migrations
+
+```bash
 npm run prisma:migrate
+```
+
+When prompted, give the migration a name (e.g., "init").
+
+### 5.6 Seed the Database with Sample Data
+
+```bash
 npm run seed
+```
+
+You should see output like:
+```
+🌱 Starting database seed...
+🗑️  Clearing existing data...
+📝 Creating companies...
+✅ Created: Stripe
+✅ Created: Airbnb
+✅ Created: Dropbox
+✅ Created: Twitch
+✅ Created: Figma
+✅ Created: Notion
+✨ Seed completed successfully!
+```
+
+### 5.7 Return to Root Directory
+
+```bash
+cd ..
 ```
 
 ## Done! 🎉
@@ -74,29 +123,85 @@ Your dashboard is now live at `https://your-project.vercel.app`
 
 ## Troubleshooting
 
-### Database Connection Failed
+### Empty Dashboard After Deployment
+
+**Problem**: You deployed successfully but the dashboard shows no companies.
+
+**Solution**: You need to run the seed script on your production database.
 
 ```bash
 # Pull latest environment variables
 vercel env pull
 
-# Check DATABASE_URL is set
-cat .env.local | grep DATABASE_URL
+# Navigate to backend
+cd backend
+
+# Generate Prisma client
+npm run prisma:generate
+
+# Run migrations
+npm run prisma:migrate
+
+# Seed the database
+npm run seed
+
+# Return to root
+cd ..
 ```
+
+After running these commands, refresh your Vercel dashboard URL in the browser. You should now see 6 sample companies (Stripe, Airbnb, Dropbox, Twitch, Figma, Notion) with launch data.
+
+### Database Connection Failed
+
+**Problem**: You get an error like "Can't reach database server"
+
+**Solution**:
+1. Make sure you've set `DATABASE_URL` in Vercel Settings → Environment Variables
+2. Pull the latest environment variables:
+   ```bash
+   vercel env pull
+   ```
+3. Check that `.env.local` contains a valid connection string:
+   ```bash
+   cat .env.local | grep DATABASE_URL
+   ```
+4. The connection string should start with `postgres://` and contain your database credentials
 
 ### Build Failed
 
-Check the build logs in Vercel dashboard:
+**Problem**: Deployment failed with TypeScript or build errors.
+
+**Solution**: Check the build logs in Vercel dashboard:
 1. Go to **Deployments**
 2. Click the failed deployment
-3. Scroll to see error messages
+3. Scroll down to see error messages
+4. Common issues:
+   - Missing environment variables → Add them in Settings → Environment Variables
+   - TypeScript errors → Run `npm run build` locally to debug
+   - Prisma Client not generated → Run `npm run prisma:generate` locally
 
-### Empty Dashboard
+### Seed Script Fails with "P1001" Error
 
-Run the seed script:
+**Problem**: Running `npm run seed` gives error: "Can't reach database server at `localhost:5432`"
 
+**Solution**: This means the script is trying to connect to your local database instead of Vercel's.
+
+1. Make sure you ran `vercel env pull` first
+2. Check that `.env.local` exists and contains `DATABASE_URL`
+3. Run the seed script again:
+   ```bash
+   npm run seed
+   ```
+
+If it still fails, the `.env.local` file might not have the correct connection string. Try:
 ```bash
+# Delete the old .env.local
+rm .env.local
+
+# Pull fresh environment variables
 vercel env pull
+
+# Try seeding again
 cd backend
 npm run seed
 ```

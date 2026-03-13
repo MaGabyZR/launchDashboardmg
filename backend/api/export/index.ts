@@ -164,7 +164,7 @@ function generateCSV(companies: any[]): string {
   };
 
   // Build CSV rows
-  const rows = companies.map((company) => [
+  const rows = companies.map((company: any) => [
     escapeCSV(company.name),
     escapeCSV(company.ycBatch),
     escapeCSV(company.fundraiseAmount),
@@ -187,7 +187,7 @@ function generateCSV(companies: any[]): string {
   // Combine headers and rows
   const csvLines = [
     headers.join(','),
-    ...rows.map(row => row.join(',')),
+    ...rows.map((row: string[]) => row.join(',')),
   ];
 
   return csvLines.join('\n');
