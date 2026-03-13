@@ -43,29 +43,29 @@ app.get('/health', async (_req, res) => {
 // API routes - these will be implemented as serverless functions in Vercel
 // For local development, we import them here
 app.get('/api/companies', async (req, res) => {
-  const handler = (await import('../api/companies/index.js')).default;
+  const handler = (await import('../../api/companies/index.js')).default;
   return handler(req, res);
 });
 
 app.post('/api/launch-posts', async (req, res) => {
-  const handler = (await import('../api/launch-posts/index.js')).default;
+  const handler = (await import('../../api/launch-posts/index.js')).default;
   return handler(req, res);
 });
 
 app.post('/api/refresh/:id', async (req, res) => {
   req.query.id = req.params.id;
-  const handler = (await import('../api/refresh/[id].js')).default;
+  const handler = (await import('../../api/refresh/[id].js')).default;
   return handler(req, res);
 });
 
 app.post('/api/companies/:id/contact', async (req, res) => {
   req.query.id = req.params.id;
-  const handler = (await import('../api/companies/[id]/contact.js')).default;
+  const handler = (await import('../../api/companies/[id]/contact.js')).default;
   return handler(req, res);
 });
 
 app.get('/api/export', async (req, res) => {
-  const handler = (await import('../api/export/index.js')).default;
+  const handler = (await import('../../api/export/index.js')).default;
   return handler(req, res);
 });
 
