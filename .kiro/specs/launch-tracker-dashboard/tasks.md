@@ -102,7 +102,7 @@ This implementation plan breaks down the Launch Tracker Dashboard into discrete,
     - Implement request queuing
     - _Requirements: 2.1_
 
-  - [ ] 4.3 Implement exponential backoff retry logic
+  - [x] 4.3 Implement exponential backoff retry logic
     - Add retry mechanism with 1s, 2s, 4s delays
     - Maximum 3 retry attempts
     - Log each retry attempt
@@ -114,14 +114,14 @@ This implementation plan breaks down the Launch Tracker Dashboard into discrete,
     - **Validates: Requirements 10.3**
     - Test that failed scraping attempts retry with correct exponential delays
 
-  - [~] 4.5 Add Puppeteer fallback for JavaScript-rendered content
+  - [x] 4.5 Add Puppeteer fallback for JavaScript-rendered content
     - Install puppeteer-core with chromium
     - Implement fallback logic when Cheerio parsing fails
     - Configure lightweight Puppeteer mode
     - Add 10-second timeout per request
     - _Requirements: 2.1_
 
-  - [~] 4.6 Implement error handling and logging
+  - [x] 4.6 Implement error handling and logging
     - Handle rate limit errors (429 responses)
     - Handle network timeouts
     - Handle parsing errors
@@ -141,8 +141,8 @@ This implementation plan breaks down the Launch Tracker Dashboard into discrete,
     - Test HTML parsing with various structures
     - _Requirements: 2.1, 2.2, 2.3, 10.1_
 
-- [~] 5. YCombinator API Client
-  - [~] 5.1 Implement YC API client service
+- [x] 5. YCombinator API Client
+  - [x] 5.1 Implement YC API client service
     - Create `services/ycClient.ts` with searchYCCompany function
     - Integrate with yc-oss/api endpoints
     - Implement fuzzy company name matching
@@ -150,7 +150,7 @@ This implementation plan breaks down the Launch Tracker Dashboard into discrete,
     - Return YCCompany object or null if not found
     - _Requirements: 3.1, 3.2, 3.6_
 
-  - [~] 5.2 Add response caching for 24 hours
+  - [x] 5.2 Add response caching for 24 hours
     - Implement in-memory cache with TTL
     - Cache successful YC API responses
     - Reduce redundant API calls
@@ -161,7 +161,7 @@ This implementation plan breaks down the Launch Tracker Dashboard into discrete,
     - **Validates: Requirements 3.3**
     - Test that any valid YC API response is correctly parsed
 
-  - [~] 5.4 Add error handling for YC API failures
+  - [x] 5.4 Add error handling for YC API failures
     - Handle API unavailable (503) errors
     - Handle rate limit errors
     - Handle invalid response formats
@@ -176,14 +176,14 @@ This implementation plan breaks down the Launch Tracker Dashboard into discrete,
     - _Requirements: 3.1, 3.2, 3.3_
 
 - [~] 6. DM Generator Service
-  - [~] 6.1 Implement low engagement detection logic
+  - [x] 6.1 Implement low engagement detection logic
     - Create `services/dmGenerator.ts` with classifyEngagement function
     - Define thresholds: X < 50 likes, LinkedIn < 100 likes
     - Calculate total engagement across platforms
     - Return boolean classification
     - _Requirements: 6.1, 6.2_
 
-  - [~] 6.2 Implement DM draft generation
+  - [x] 6.2 Implement DM draft generation
     - Create generateDM function
     - Build message template with company name
     - Include reason for outreach
@@ -209,7 +209,7 @@ This implementation plan breaks down the Launch Tracker Dashboard into discrete,
     - _Requirements: 6.1, 6.2, 6.3_
 
 - [~] 7. API Endpoint: GET /api/companies
-  - [~] 7.1 Implement companies list endpoint
+  - [x] 7.1 Implement companies list endpoint
     - Create `/api/companies/index.ts` serverless function
     - Query all companies with related data (fundraise, launchPosts, contactInfo)
     - Support query parameters: sortBy, order, minEngagement, hasContact
@@ -235,7 +235,7 @@ This implementation plan breaks down the Launch Tracker Dashboard into discrete,
     - _Requirements: 8.1_
 
 - [~] 8. API Endpoint: POST /api/launch-posts
-  - [~] 8.1 Implement launch posts creation endpoint
+  - [x] 8.1 Implement launch posts creation endpoint
     - Create `/api/launch-posts/index.ts` serverless function
     - Accept URLs array and companyName in request body
     - Validate each URL using URL parser
@@ -246,7 +246,7 @@ This implementation plan breaks down the Launch Tracker Dashboard into discrete,
     - Return results array with success/failure status per URL
     - _Requirements: 1.1, 1.2, 1.3, 1.4, 1.5, 8.5, 13.3, 13.4_
 
-  - [~] 8.2 Add support for manual metrics entry
+  - [x] 8.2 Add support for manual metrics entry
     - Accept optional manualMetrics in request body
     - Store manual metrics with MANUAL data source
     - Skip scraping when manual metrics provided
@@ -276,7 +276,7 @@ This implementation plan breaks down the Launch Tracker Dashboard into discrete,
     - _Requirements: 8.5, 13.1, 13.2, 13.5_
 
 - [~] 9. API Endpoint: POST /api/refresh/:companyId
-  - [~] 9.1 Implement data refresh endpoint
+  - [x] 9.1 Implement data refresh endpoint
     - Create `/api/refresh/[id].ts` serverless function
     - Get company's launch post URLs from database
     - Trigger scraping for each URL
@@ -289,12 +289,12 @@ This implementation plan breaks down the Launch Tracker Dashboard into discrete,
     - **Validates: Requirements 12.4**
     - Test that refresh updates existing records instead of creating duplicates
 
-  - [~] 9.3 Add last refresh timestamp tracking
+  - [x] 9.3 Add last refresh timestamp tracking
     - Update lastScraped field on successful refresh
     - Return timestamp in response
     - _Requirements: 12.5_
 
-  - [~] 9.4 Handle refresh failures gracefully
+  - [x] 9.4 Handle refresh failures gracefully
     - Mark posts needing manual update when scraping fails
     - Log refresh errors
     - Continue processing remaining posts
@@ -308,7 +308,7 @@ This implementation plan breaks down the Launch Tracker Dashboard into discrete,
     - _Requirements: 12.1, 12.2, 12.3, 12.4_
 
 - [~] 10. API Endpoint: POST /api/companies/:companyId/contact
-  - [~] 10.1 Implement contact information endpoint
+  - [x] 10.1 Implement contact information endpoint
     - Create `/api/companies/[id]/contact.ts` serverless function
     - Accept email, phone, linkedinUrl, xHandle in request body
     - Validate email format
@@ -326,7 +326,7 @@ This implementation plan breaks down the Launch Tracker Dashboard into discrete,
     - _Requirements: 5.1, 5.2, 5.3, 5.4, 5.5_
 
 - [~] 11. API Endpoint: GET /api/export
-  - [~] 11.1 Implement data export endpoint
+  - [x] 11.1 Implement data export endpoint
     - Create `/api/export/index.ts` serverless function
     - Support format query parameter (csv or json)
     - Support companyIds filter for selective export
@@ -354,18 +354,18 @@ This implementation plan breaks down the Launch Tracker Dashboard into discrete,
     - Test data source indicators
     - _Requirements: 14.1, 14.2, 14.3, 14.4, 14.5, 14.6_
 
-- [~] 12. Checkpoint - Backend services and API endpoints complete
+- [x] 12. Checkpoint - Backend services and API endpoints complete
   - Ensure all tests pass, ask the user if questions arise.
 
 - [~] 13. Frontend: Dashboard layout and routing
-  - [~] 13.1 Create main Dashboard component
+  - [x] 13.1 Create main Dashboard component
     - Create `src/components/Dashboard.tsx`
     - Set up TanStack Query for fetching companies
     - Implement loading and error states
     - Display companies in responsive grid layout
     - _Requirements: 4.1, 15.1_
 
-  - [~] 13.2 Implement responsive grid layout
+  - [x] 13.2 Implement responsive grid layout
     - Use Tailwind CSS grid utilities
     - Single column on mobile (< 768px)
     - Multi-column grid on desktop (>= 768px)
@@ -385,7 +385,7 @@ This implementation plan breaks down the Launch Tracker Dashboard into discrete,
     - _Requirements: 4.1, 15.1_
 
 - [~] 14. Frontend: CompanyCard component
-  - [~] 14.1 Create CompanyCard component
+  - [x] 14.1 Create CompanyCard component
     - Create `src/components/CompanyCard.tsx`
     - Display company name and YC batch
     - Display fundraise amount with source indicator
@@ -397,13 +397,13 @@ This implementation plan breaks down the Launch Tracker Dashboard into discrete,
     - Add refresh button with loading state
     - _Requirements: 4.2, 4.3, 4.4, 4.5, 4.6, 5.6, 5.7, 6.4, 12.5_
 
-  - [~] 14.2 Implement data source indicators
+  - [x] 14.2 Implement data source indicators
     - Create visual badges for MANUAL, SCRAPED, YC_API sources
     - Use distinct colors for each source type
     - Display null indicator for missing data
     - _Requirements: 4.5, 4.6_
 
-  - [~] 14.3 Add copy-to-clipboard for DM drafts
+  - [x] 14.3 Add copy-to-clipboard for DM drafts
     - Implement clipboard API integration
     - Show success feedback on copy
     - _Requirements: 6.5_
@@ -417,7 +417,7 @@ This implementation plan breaks down the Launch Tracker Dashboard into discrete,
     - _Requirements: 4.2, 4.3, 4.4, 4.5, 6.4, 6.5_
 
 - [~] 15. Frontend: ManualEntryForm component
-  - [~] 15.1 Create ManualEntryForm component for single URL entry
+  - [x] 15.1 Create ManualEntryForm component for single URL entry
     - Create `src/components/ManualEntryForm.tsx`
     - Add input field for URL
     - Add input field for company name
@@ -427,7 +427,7 @@ This implementation plan breaks down the Launch Tracker Dashboard into discrete,
     - Show success/error feedback
     - _Requirements: 1.1, 1.2, 1.6_
 
-  - [~] 15.2 Add bulk URL entry mode
+  - [x] 15.2 Add bulk URL entry mode
     - Add textarea for multiple URLs
     - Parse newline or comma-separated URLs
     - Validate each URL individually
@@ -435,13 +435,13 @@ This implementation plan breaks down the Launch Tracker Dashboard into discrete,
     - Show which URLs failed and why
     - _Requirements: 13.1, 13.2, 13.5, 13.6_
 
-  - [~] 15.3 Add manual metrics entry fields
+  - [x] 15.3 Add manual metrics entry fields
     - Add optional fields for X likes
     - Add optional fields for LinkedIn likes
     - Show manual entry fields when scraping fails
     - _Requirements: 2.6, 10.6_
 
-  - [~] 15.4 Ensure mobile-friendly form inputs
+  - [x] 15.4 Ensure mobile-friendly form inputs
     - Use appropriate input types for mobile keyboards
     - Ensure touch targets are at least 44x44 pixels
     - Test on mobile devices
@@ -461,7 +461,7 @@ This implementation plan breaks down the Launch Tracker Dashboard into discrete,
     - _Requirements: 1.1, 1.2, 1.6, 13.1, 13.2_
 
 - [~] 16. Frontend: ContactInfoForm component
-  - [~] 16.1 Create ContactInfoForm component
+  - [x] 16.1 Create ContactInfoForm component
     - Create `src/components/ContactInfoForm.tsx`
     - Add input fields for email, phone, LinkedIn URL, X handle
     - Implement email validation
@@ -480,7 +480,7 @@ This implementation plan breaks down the Launch Tracker Dashboard into discrete,
     - _Requirements: 5.1, 5.2, 5.3, 5.4_
 
 - [~] 17. Frontend: FilterBar and ExportButton components
-  - [~] 17.1 Create FilterBar component
+  - [x] 17.1 Create FilterBar component
     - Create `src/components/FilterBar.tsx`
     - Add sort by dropdown (date, engagement, fundraise amount)
     - Add sort order toggle (asc/desc)
@@ -489,7 +489,7 @@ This implementation plan breaks down the Launch Tracker Dashboard into discrete,
     - Update query parameters on filter change
     - _Requirements: 14.5_
 
-  - [~] 17.2 Create ExportButton component
+  - [x] 17.2 Create ExportButton component
     - Create `src/components/ExportButton.tsx`
     - Add format selection (CSV or JSON)
     - Trigger export API call
@@ -505,19 +505,19 @@ This implementation plan breaks down the Launch Tracker Dashboard into discrete,
     - _Requirements: 14.1, 14.5_
 
 - [~] 18. Frontend: Error handling and user feedback
-  - [~] 18.1 Implement global error boundary
+  - [x] 18.1 Implement global error boundary
     - Create error boundary component
     - Display user-friendly error messages
     - Log errors for debugging
     - _Requirements: 1.6, 8.7_
 
-  - [~] 18.2 Add ToS disclaimer for web scraping
+  - [x] 18.2 Add ToS disclaimer for web scraping
     - Create disclaimer component
     - Display on dashboard load
     - Acknowledge scraping risks
     - _Requirements: 2.5_
 
-  - [~] 18.3 Implement user-facing error messages
+  - [x] 18.3 Implement user-facing error messages
     - Create error message utilities
     - Map technical errors to user-friendly messages
     - Display actionable next steps
@@ -530,45 +530,45 @@ This implementation plan breaks down the Launch Tracker Dashboard into discrete,
     - _Requirements: 1.6, 2.5_
 
 - [~] 19. Testing infrastructure setup
-  - [~] 19.1 Configure Vitest for unit testing
+  - [x] 19.1 Configure Vitest for unit testing
     - Install Vitest and testing utilities
     - Configure test environment for React components
     - Set up test database for integration tests
     - Configure coverage reporting
     - _Requirements: All testing requirements_
 
-  - [~] 19.2 Configure fast-check for property-based testing
+  - [x] 19.2 Configure fast-check for property-based testing
     - Install fast-check library
     - Create custom generators for URLs, companies, and data entities
     - Configure test runs for 100 iterations minimum
     - Set up seed-based reproducibility
     - _Requirements: All property testing requirements_
 
-  - [~] 19.3 Set up Playwright for E2E testing
+  - [x] 19.3 Set up Playwright for E2E testing
     - Install Playwright
     - Configure test browsers
     - Create test fixtures for database seeding
     - _Requirements: Integration testing_
 
-  - [~] 19.4 Configure CI pipeline with GitHub Actions
+  - [x] 19.4 Configure CI pipeline with GitHub Actions
     - Create workflow file for CI
     - Run linting, type checking, unit tests, property tests
     - Generate coverage reports
     - Deploy preview to Vercel on PR
     - _Requirements: 9.1, 9.2_
 
-- [~] 20. Checkpoint - Frontend components and testing complete
+- [x] 20. Checkpoint - Frontend components and testing complete
   - Ensure all tests pass, ask the user if questions arise.
 
 - [~] 21. Integration and deployment
-  - [~] 21.1 Wire frontend to backend API endpoints
+  - [x] 21.1 Wire frontend to backend API endpoints
     - Configure API base URL for different environments
     - Set up TanStack Query hooks for all endpoints
     - Implement error handling for API calls
     - Add request/response interceptors
     - _Requirements: 8.1-8.6_
 
-  - [~] 21.2 Test complete user flows end-to-end
+  - [x] 21.2 Test complete user flows end-to-end
     - Manual URL entry → Database storage → Dashboard display
     - Bulk URL import → Validation → Summary display
     - Data refresh → Scraping → UI update
@@ -581,7 +581,7 @@ This implementation plan breaks down the Launch Tracker Dashboard into discrete,
     - **Validates: Requirements 7.6**
     - Test that deleting a company cascades to all related records
 
-  - [~] 21.4 Deploy to Vercel and configure production environment
+  - [x] 21.4 Deploy to Vercel and configure production environment
     - Connect GitHub repository to Vercel
     - Configure environment variables in Vercel dashboard
     - Set up Vercel Postgres database
@@ -589,7 +589,7 @@ This implementation plan breaks down the Launch Tracker Dashboard into discrete,
     - Test deployment with production URLs
     - _Requirements: 9.1, 9.2, 9.3, 9.4, 9.5_
 
-  - [~] 21.5 Verify free tier constraints and optimization
+  - [x] 21.5 Verify free tier constraints and optimization
     - Monitor bandwidth usage
     - Monitor serverless function invocations
     - Implement caching strategies if needed
@@ -597,20 +597,20 @@ This implementation plan breaks down the Launch Tracker Dashboard into discrete,
     - _Requirements: 9.5_
 
 - [~] 22. Documentation and final polish
-  - [~] 22.1 Create README with setup instructions
+  - [x] 22.1 Create README with setup instructions
     - Document local development setup
     - Document environment variables
     - Document deployment process
     - Include troubleshooting guide
     - _Requirements: All requirements_
 
-  - [~] 22.2 Create API documentation
+  - [x] 22.2 Create API documentation
     - Document all API endpoints
     - Include request/response examples
     - Document error codes and messages
     - _Requirements: 8.1-8.8_
 
-  - [~] 22.3 Perform manual testing checklist
+  - [x] 22.3 Perform manual testing checklist
     - Test all user flows on desktop browsers (Chrome, Firefox, Safari)
     - Test all user flows on mobile browsers (iOS Safari, Android Chrome)
     - Verify responsive layout at various screen sizes
@@ -618,7 +618,7 @@ This implementation plan breaks down the Launch Tracker Dashboard into discrete,
     - Verify ToS disclaimer display
     - _Requirements: 15.1-15.6_
 
-- [~] 23. Final checkpoint - Production ready
+- [x] 23. Final checkpoint - Production ready
   - Ensure all tests pass, ask the user if questions arise.
 
 ## Notes
